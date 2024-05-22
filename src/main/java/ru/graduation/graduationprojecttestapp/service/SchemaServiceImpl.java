@@ -1,25 +1,20 @@
 package ru.graduation.graduationprojecttestapp.service;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.*;
-import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RequestCallback;
-import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 import ru.graduation.graduationprojecttestapp.entity.Schema;
 import ru.graduation.graduationprojecttestapp.repository.SchemaRepo;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Arrays;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,8 +31,10 @@ public class SchemaServiceImpl implements SchemaService {
     }
 
     @Override
-    public Resource getSvgBySchemaId(UUID schemaId) {
+    public String getSvgBySchemaId(UUID schemaId) throws IOException {
         String url = svgMakerBaseUrl + "/schemas/" + schemaId + "/svg";
-        return restTemplate.getForObject(url, Resource.class);
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(restTemplate.getForObject(url, Resource.class).getInputStream(), StandardCharsets.UTF_8))) {
+            return reader.lines().collect(Collectors.joining("\n"));
+        }
     }
 }

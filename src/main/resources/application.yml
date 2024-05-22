@@ -2,10 +2,10 @@ spring:
   application:
     name: GraduationProjectTestApp
   datasource:
-    url: jdbc:postgresql://localhost:5442/graduation_project
-    username: postgres
-    password: postgres
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5442/graduation_project}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:postgres}
     driverClassName: org.postgresql.Driver
 
 svg-maker:
-  base-url: http://localhost:5123/api
+  base-url: ${SVG_MAKER_URL:http://localhost:5123/api}

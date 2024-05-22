@@ -30,18 +30,9 @@ public class SchemaController {
         return "main_page";
     }
 
-//    @GetMapping(value = "/schemas/{schemaId}", produces = "image/svg+xml")
-//    @ResponseBody
-//    public Resource drawSvg(@PathVariable UUID schemaId) {
-//        return schemaService.getSvgBySchemaId(schemaId);
-//    }
-
     @GetMapping(value = "/schemas/{schemaId}")
     public String drawSvg(@PathVariable UUID schemaId, Model model) throws IOException {
-        String svgContent;
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(schemaService.getSvgBySchemaId(schemaId).getInputStream(), StandardCharsets.UTF_8))) {
-            svgContent = reader.lines().collect(Collectors.joining("\n"));
-        }
+        String svgContent = schemaService.getSvgBySchemaId(schemaId);
         model.addAttribute("svgContent", svgContent);
         return "schema_page";
     }
