@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Список схем</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Название схемы</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="schema, stat : ${schemas}">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${schema.name}"></td>
+            <td>
+                <button class="btn btn-primary" th:data-id="${schema.id}" onclick="window.location.href='/schemas/' + this.getAttribute('data-id')">Показать</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

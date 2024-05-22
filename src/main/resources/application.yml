@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: GraduationProjectTestApp
+  datasource:
+    url: jdbc:postgresql://localhost:5442/graduation_project
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+
+svg-maker:
+  base-url: http://localhost:5123/api
