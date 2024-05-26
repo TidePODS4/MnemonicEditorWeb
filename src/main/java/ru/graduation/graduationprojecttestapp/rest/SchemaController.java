@@ -31,9 +31,11 @@ public class SchemaController {
     }
 
     @GetMapping(value = "/schemas/{schemaId}")
-    public String drawSvg(@PathVariable UUID schemaId, Model model) throws IOException {
+    public String drawSvg(@PathVariable UUID schemaId, Model model) throws Exception {
+        Schema schema = schemaService.findById(schemaId).orElseThrow(() -> new Exception("Schema not found"));
         String svgContent = schemaService.getSvgBySchemaId(schemaId);
         model.addAttribute("svgContent", svgContent);
+        model.addAttribute("svgName", schema.getName());
         return "schema_page";
     }
 }

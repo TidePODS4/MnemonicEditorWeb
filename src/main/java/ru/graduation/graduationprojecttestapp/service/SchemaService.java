@@ -4,9 +4,11 @@ import ru.graduation.graduationprojecttestapp.entity.Schema;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface SchemaService {
     List<Schema> findAll();
     String getSvgBySchemaId(UUID schemaId) throws IOException;
+    Optional<Schema> findById(UUID uuid);
 }
